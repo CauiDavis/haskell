@@ -1,3 +1,4 @@
+
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Redundant bracket" #-}
@@ -178,3 +179,4 @@ aux_spg :: Int -> Int -> Int -> Int
 aux_spg n m o  | (n > m && n > o) && primo_gemeos m o == True = m + o + aux_spg n (m+1) (o+1)
                | (n > m && n > o) && primo_gemeos m o == False = aux_spg n (m+1) (o+1)
                | otherwise = 0
+
