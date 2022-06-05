@@ -16,3 +16,4 @@ valida (d,m,a) | m < 1 || m > 12 = False
 type Hora = (Int, Int, Int)
 totalSegundos :: Hora -> Int
 totalSegundos (h,m,s) = (h*60*60) + (m*60) + s
+
