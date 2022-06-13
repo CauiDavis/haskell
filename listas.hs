@@ -4,54 +4,82 @@
 {-# HLINT ignore "Use camelCase" #-}
 {-# HLINT ignore "Redundant bracket" #-}
 {-# HLINT ignore "Redundant ==" #-}
-module Listas where
-    contavizinhosiguais :: [Char] -> Int
-    contavizinhosiguais [] = 0
-    contavizinhosiguais (x:xs) | length (x:xs) == 1 = 0
-                               | x == head xs = 1 + contavizinhosiguais xs
-                               | otherwise = contavizinhosiguais xs
+{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
+{-# HLINT ignore "Use null" #-}
 
-    somalista :: [Int] -> Int
-    somalista [] = 0
-    somalista (x:xs) = x + somalista xs
+contavizinhosiguais :: [Char] -> Int
+contavizinhosiguais [] = 0
+contavizinhosiguais (x:xs) | length (x:xs) == 1 = 0
+                           | x == head xs = 1 + contavizinhosiguais xs
+                           | otherwise = contavizinhosiguais xs
 
-    impares :: [Int]
-    impares = [1,3..100]
+somalista :: [Int] -> Int
+somalista [] = 0
+somalista (x:xs) = x + somalista xs
 
-    pares :: [Int]
-    pares = [10,12..100]
+impares :: [Int]
+impares = [1,3..100]
 
-    imparesn :: Int -> [Int]
-    imparesn 0 = []
-    imparesn n = [x | x <- [1,3..n]]
+pares :: [Int]
+pares = [10,12..100]
 
-    multi3e5 :: Int -> [Int]
-    multi3e5 n = [x | x <- [1..n],mod x 3 == 0,mod x 5 ==0]
+imparesn :: Int -> [Int]
+imparesn 0 = []
+imparesn n = [x | x <- [1,3..n]]
 
-    tq :: Int -> [(Int,Int)]
-    tq n = [(x,x^2) | x <-[1..n]]
+multi3e5 :: Int -> [Int]
+multi3e5 n = [x | x <- [1..n],mod x 3 == 0,mod x 5 ==0]
 
-    indices :: [(Int,Int)]
-    indices = [(x,y) | x <- [1..3],y <-[1..4]]
+tq :: Int -> [(Int,Int)]
+tq n = [(x,x*x) | x <-[1..n]]
 
-    fib :: Int -> Int
-    fib 0 = 0
-    fib 1 = 1
-    fib n = fib (n-1) + fib (n-2)
-    listafib :: Int -> [Int]
-    listafib 0 = []
-    listafib n = [fib x | x <- [1..n]]
+indices :: [(Int,Int)]
+indices = [(x,y) | x <- [1..3],y <-[1..4]]
 
-    fatores :: Int -> [Int]
-    fatores n = [x | x <- [1..(div n 2)], mod n x == 0]
+fib :: Int -> Int
+fib 0 = 0
+fib 1 = 1
+fib n = fib (n-1) + fib (n-2)
+listafib :: Int -> [Int]
+listafib 0 = []
+listafib n = [fib x | x <- [1..n]]
 
-    auxnumperfeito :: Int -> [Int]
-    auxnumperfeito num = [ x | x <- [1 .. num-1], ((mod num x) == 0) ]
-    eh_perfeito :: Int -> Bool
-    eh_perfeito n | (sum (auxnumperfeito n)) == n = True
-                  | otherwise = False
-    listanumperfeito :: Int -> [Int]
-    listanumperfeito n = [x | x <- [1..n],eh_perfeito x == True]
+fatores :: Int -> [Int]
+fatores n = [x | x <- [1..(div n 2)], mod n x == 0]
 
-    concatena :: [[Int]] -> [Int]
-    concatena l = [y | x <- l,y <- x]
+auxnumperfeito :: Int -> [Int]
+auxnumperfeito num = [ x | x <- [1 .. num-1], ((mod num x) == 0) ]
+eh_perfeito :: Int -> Bool
+eh_perfeito n | (sum (auxnumperfeito n)) == n = True
+              | otherwise = False
+listanumperfeito :: Int -> [Int]
+listanumperfeito n = [x | x <- [1..n],eh_perfeito x == True]
+
+concatena :: [[Int]] -> [Int]
+concatena l = [y | x <- l,y <- x]
+
+type Funcionario = (String, Float)
+
+-- Base de dados
+folha :: [Funcionario]
+folha = [("Ana", 772.25), ("Jose", 2375.0), ("Caui", 1778.5)]
+
+--Função auxiliar que descompacta um funcionario e retorna somente seu salario
+salario :: Funcionario -> Float
+salario (_, sal) = sal
+
+-- =================================
+-- 1 quanto gasta mensalmente em salarios?
+--Usando somente os conceitos de lista (feito em sala)
+gastoMensal :: [Funcionario] -> Float
+gastoMensal (x:xs)
+    |xs == [] = salario x
+    |otherwise =  salario (x) + gastoMensal (xs) 
+
+acimasalario :: Float -> [Funcionario]
+acimasalario n = [(x,y) | (x,y) <- folha, y > n]
+
+diff :: Float -> [Funcionario]
+diff n = [(x, abs(y-n)) |(x,y) <- folha]
+aproxsalario :: Float -> Funcionario
+aproxsalario n = minimum (diff n)
