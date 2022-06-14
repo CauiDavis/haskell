@@ -81,5 +81,5 @@ acimasalario n = [(x,y) | (x,y) <- folha, y > n]
 
 diff :: Float -> [Funcionario]
 diff n = [(x, abs(y-n)) |(x,y) <- folha]
-aproxsalario :: Float -> Funcionario
-aproxsalario n = minimum (diff n)
+aproxsalario :: Float -> Float
+aproxsalario n = minimum [y |(_,y) <- diff n]
