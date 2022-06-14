@@ -5,6 +5,8 @@
 {-# HLINT ignore "Use null" #-}
 {-# HLINT ignore "Redundant ==" #-}
 {-# HLINT ignore "Use camelCase" #-}
+{-# HLINT ignore "Use even" #-}
+{-# HLINT ignore "Redundant guard" #-}
 module Haskell where
   soma :: Int -> Int -> Int
   soma x y = x+y

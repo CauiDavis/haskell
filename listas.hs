@@ -83,3 +83,11 @@ diff :: Float -> [Funcionario]
 diff n = [(x, abs(y-n)) |(x,y) <- folha]
 aproxsalario :: Float -> Float
 aproxsalario n = minimum [y |(_,y) <- diff n]
+
+maissalario :: [Funcionario] -> Float
+maissalario (x:xs) | xs == [] = 0
+                   | salario x > 1100 && salario x < 2203 = (salario x)*0.09 + maissalario xs
+                   | salario x > 2203 && salario x < 3505 = (salario x)*0.12 + maissalario xs
+                   | salario x > 3505 && salario x < 6433 = (salario x)*0.14 + maissalario xs
+                   | salario x > 6433 = (salario x)*0.22 + maissalario xs
+                   | otherwise = maissalario xs
