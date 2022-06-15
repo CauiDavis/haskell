@@ -91,3 +91,21 @@ maissalario (x:xs) | xs == [] = 0
                    | salario x > 3505 && salario x < 6433 = (salario x)*0.14 + maissalario xs
                    | salario x > 6433 = (salario x)*0.22 + maissalario xs
                    | otherwise = maissalario xs
+
+listaper :: [Int]
+listaper = [1,2,3,4,5,6,7,9,8]
+
+plistaaux :: Int -> [Int]
+plistaaux n = [x | x <- listaper, x == n]
+plista :: Int -> Bool
+plista n | plistaaux n == [] = False
+         | otherwise = True
+
+maiorlista :: [Int] -> Int
+maiorlista n = maximum [x | x <- listaper]
+
+enlista :: Int -> Int
+enlista n  = listaper !! n
+
+droplista :: Int -> [Int]
+droplista n = [x | x <- listaper,(listaper !! n) /= x]
