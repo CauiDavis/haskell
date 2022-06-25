@@ -109,3 +109,16 @@ enlista n  = listaper !! n
 
 droplista :: Int -> [Int]
 droplista n = [x | x <- listaper,(listaper !! n) /= x]
+
+quicksort :: [Int] -> [Int]
+quicksort [] = []
+quicksort (x:xs) = quicksort [y | y <- xs, y <= x] ++ [x] ++ quicksort [y | y <- xs, y > x]
+
+duplica :: [Int] -> [Int]
+duplica lduplica = [x | x <- quicksort (lduplica ++ lduplica)]
+
+reg :: [(Int, String)]
+reg = [(15,"Ana"),(22,"Pedro"),(2,"Maria"),(12,"Joao"),(14,"Pablo"),(23,"Poliana")]
+quicksortupla :: [(Int,String)] -> [(Int,String)]
+quicksortupla [] = []
+quicksortupla (x:xs) = quicksortupla [y | y <- xs , fst y <= fst x] ++ [x] ++ quicksortupla [y | y <- xs , fst y > fst x]
