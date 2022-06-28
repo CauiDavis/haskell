@@ -122,3 +122,6 @@ reg = [(15,"Ana"),(22,"Pedro"),(2,"Maria"),(12,"Joao"),(14,"Pablo"),(23,"Poliana
 quicksortupla :: [(Int,String)] -> [(Int,String)]
 quicksortupla [] = []
 quicksortupla (x:xs) = quicksortupla [y | y <- xs , fst y <= fst x] ++ [x] ++ quicksortupla [y | y <- xs , fst y > fst x]
+
+add_fim :: [Int] -> Int -> [Int]
+add_fim list n = list ++ [n]
