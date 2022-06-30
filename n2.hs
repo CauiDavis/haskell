@@ -8,13 +8,14 @@ quicksortupla :: [(Char,Int)] -> [(Char,Int)]
 quicksortupla [] = []
 quicksortupla (x:xs) = quicksortupla [y | y <- xs , snd y <= snd x] ++ [x] ++ quicksortupla [y | y <- xs , snd y > snd x]
 
-repeticao :: String -> String
-repeticao [] = []
-repeticao (x:xs) = [y | y <- xs , y /= x] ++ repeticao xs
+removeDup :: String -> String
+removeDup [] = []
+removeDup [n] = [n]
+removeDup (x:xs) = x:(removeDup $ filter (/=x) xs)
 
 ordefreqaux :: String -> [(Char,Int)]
 ordefreqaux [] = []
 ordefreqaux listt = reverse (quicksortupla (analise listt))
 ordefreq :: String -> String
 ordefreq [] = []
-ordefreq list2 = [x | (x,_) <- ordefreqaux list2]
+ordefreq list2 = removeDup ([x | (x,_) <- ordefreqaux  list2])

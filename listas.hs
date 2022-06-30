@@ -125,3 +125,8 @@ quicksortupla (x:xs) = quicksortupla [y | y <- xs , fst y <= fst x] ++ [x] ++ qu
 
 add_fim :: [Int] -> Int -> [Int]
 add_fim list n = list ++ [n]
+
+hanoi :: Int -> Int -> Int -> Int -> [String]
+hanoi 0 _ _ _ = []
+hanoi n orig aux dest | n == 1 = [show (orig) ++ "->" ++ show (dest)]
+                      | otherwise = (hanoi (n-1) orig dest aux) ++ [show (orig) ++ "->" ++ show (dest)] ++ (hanoi (n-1) aux orig dest)
