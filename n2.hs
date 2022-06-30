@@ -8,6 +8,10 @@ quicksortupla :: [(Char,Int)] -> [(Char,Int)]
 quicksortupla [] = []
 quicksortupla (x:xs) = quicksortupla [y | y <- xs , snd y <= snd x] ++ [x] ++ quicksortupla [y | y <- xs , snd y > snd x]
 
+repeticao :: String -> String
+repeticao [] = []
+repeticao (x:xs) = [y | y <- xs , y /= x] ++ repeticao xs
+
 ordefreqaux :: String -> [(Char,Int)]
 ordefreqaux [] = []
 ordefreqaux listt = reverse (quicksortupla (analise listt))
