@@ -146,3 +146,13 @@ intercede (x:xs) (y:ys) | x == y = [x] ++ intercede xs ys
 separa :: [Int] -> Int -> [([Int], [Int])]
 separa [] n = []
 separa listse n = [((take n listse) , (drop n listse))] 
+
+doisindices :: String -> Int -> Int -> String
+doisindices [] n m = []
+doisindices listadois n m = take (abs (n-m)) (drop n listadois)
+
+intercala :: [Int] -> [Int] -> [Int]
+intercala [] [] = []
+intercala [] [n] = []
+intercala (x:xs) (y:ys) = x:y:intercala xs ys
+
