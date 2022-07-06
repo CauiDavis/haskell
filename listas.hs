@@ -130,4 +130,19 @@ hanoi :: Int -> Int -> Int -> Int -> [String]
 hanoi 0 _ _ _ = []
 hanoi n orig aux dest | n == 1 = [show (orig) ++ "->" ++ show (dest)]
                       | otherwise = (hanoi (n-1) orig dest aux) ++ [show (orig) ++ "->" ++ show (dest)] ++ (hanoi (n-1) aux orig dest)
-                    
+
+palidromo :: String -> Bool
+palidromo [] = False
+palidromo str | str == reverse str = True
+              | otherwise = False
+
+intercede :: [Int] -> [Int] -> [Int]
+intercede [] [] = []
+intercede [] [n] = []
+intercede [m] [] = []
+intercede (x:xs) (y:ys) | x == y = [x] ++ intercede xs ys
+                        | otherwise = intercede xs ys
+
+separa :: [Int] -> Int -> [([Int], [Int])]
+separa [] n = []
+separa listse n = [((take n listse) , (drop n listse))] 
