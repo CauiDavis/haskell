@@ -156,3 +156,12 @@ intercala [] [] = []
 intercala [] [n] = []
 intercala (x:xs) (y:ys) = x:y:intercala xs ys
 
+passagemaux :: (Int,Float) -> Float
+passagemaux n | fst n >= 60 = (snd n)*0.60
+              | fst n > 10 && fst n < 60 = (snd n)
+              | fst n > 2 && fst n <= 10 = (snd n)*0.50
+              | fst n > 0 && fst n <= 2 = (snd n)*0.10
+              | otherwise = 0.0
+passagem :: [(Int,Float)] -> Float
+passagem [] = 0.0
+passagem listn = sum [passagemaux x |x <- listn]
