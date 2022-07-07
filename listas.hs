@@ -6,7 +6,7 @@
 {-# HLINT ignore "Redundant ==" #-}
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 {-# HLINT ignore "Use null" #-}
-
+import Data.List
 contavizinhosiguais :: [Char] -> Int
 contavizinhosiguais [] = 0
 contavizinhosiguais (x:xs) | length (x:xs) == 1 = 0
@@ -176,3 +176,27 @@ imc2 (x,y) | y < 18.5 = (x,"abaixo do peso")
 classsifica :: [(Int,Float,Float)] ->[(Int,String)]
 classsifica [] = []
 classsifica listimc = [imc2 (imc1 x) | x <- listimc]
+
+divprop :: Integer -> [Integer]
+divprop n = [x | x <- [1..(n-1)],mod n x == 0]
+
+maiuscula :: String -> Int
+maiuscula str = length[x | x <- str, x >= 'A' && x <= 'Z']
+minuscula :: String -> Int
+minuscula str = length[x | x <- str,x >= 'a' && x <= 'z']
+numeros :: String -> Int
+numeros str = length[x | x <- str, x >= '0' && x <= '9']
+forte :: String -> Bool
+forte str | length str < 8 = False
+          | maiuscula str > 0 && minuscula str > 0 && numeros str > 0 = True
+          |otherwise = False
+
+naorepetir :: String -> String
+naorepetir str = nub str
+
+tobitaux :: Int -> [Int]
+tobitaux n | n > 1 = reverse [mod n 2] ++ tobitaux (div n 2)
+        | n == 1 = reverse [1]
+        | otherwise = reverse [0]
+tobit :: Int -> [Int]
+tobit n = reverse (tobitaux n)
