@@ -165,3 +165,14 @@ passagemaux n | fst n >= 60 = (snd n)*0.60
 passagem :: [(Int,Float)] -> Float
 passagem [] = 0.0
 passagem listn = sum [passagemaux x |x <- listn]
+
+imc1 :: (Int,Float,Float) -> (Int,Float)
+imc1 (x,y,z) = (x,(y/(z*z)))
+imc2 :: (Int,Float) -> (Int,String)
+imc2 (x,y) | y < 18.5 = (x,"abaixo do peso")
+           | y >= 18.5 && y < 25 = (x,"peso normal")
+           | y >= 25 && y < 30 = (x,"excesso de peso")
+           | y >= 30 = (x,"obesidade")
+classsifica :: [(Int,Float,Float)] ->[(Int,String)]
+classsifica [] = []
+classsifica listimc = [imc2 (imc1 x) | x <- listimc]
