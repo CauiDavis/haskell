@@ -28,3 +28,6 @@ atualizar n m = criar_arvore (n ++ m)
 total :: [(String,Integer,Double)] -> String
 total [] = "R$:0.0"
 total listt = "R$:" ++ show (sum [x | (_,_,x) <- listt])
+
+data Registro = Produto String Integer Double | Vazio
+              deriving (Eq, Ord, Show)
