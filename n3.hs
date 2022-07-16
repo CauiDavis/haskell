@@ -63,9 +63,8 @@ menu :: [Registro] -> IO ()
 menu dados = do
   putStrLn "\n--------MENU--------"
   putStrLn "Digite 1 para inserir Produto"
-  putStrLn "Digite 2 remover da Produto"
-  putStrLn "Digite 4 para consultar na agenda"
-  putStrLn "Digite 5 imprimir"
+  putStrLn "Digite 2 remover Produto"
+  putStrLn "Digite 3 atualizar Produtos"
   putStrLn "Digite 0 para sair"
   putStr "Opção: "
   opt <- getChar
@@ -84,7 +83,7 @@ menu dados = do
       let res=remover dados (Produto a b c)
       putStrLn "\nItem removido com sucesso"
       menu res
-    '5' -> do
+    '3' -> do
       atualizar dados
       -- putStrLn "\nItem removido com sucesso"
       menu dados
