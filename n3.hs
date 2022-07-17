@@ -51,18 +51,19 @@ mesmoNome (Produto p1 _ _) (Produto p2 _ _)
 mesmoNome _ _ = False
 
 atualizar ::[Registro] -> IO ()
-atualizar [] = do putStrLn "\nAGENDA VAZIA"
+atualizar [] = do putStrLn "\n REGISTRO VAZIO"
 atualizar lista = do
-  putStrLn "\n--------AGENDA--------"
+  putStrLn "\n--------REGISTRO--------"
   print (show (criar_arvore lista))
 
 remover :: [Registro] -> Registro -> [Registro]
 remover [] _ = []
-remover lista reg = [e|e<-lista, mesmoNome e reg/=True]
+remover lista reg = [e|e<-lista, mesmoNome e reg /= True]
 
-total :: [Registro] -> String
-total [] = "R$:0.0"
-total lista = show (sum [multiplicacao x y | Produto _ x y <- lista])
+total :: [Registro] -> IO ()
+total [] = do putStrLn "R$:0.0"
+total list = do
+  print ("R$:" ++ show (sum [multiplicacao x y | Produto _ x y <- list]))
 
 menu :: [Registro] -> IO ()
 menu dados = do
@@ -70,6 +71,7 @@ menu dados = do
   putStrLn "Digite 1 para inserir Produto"
   putStrLn "Digite 2 remover Produto"
   putStrLn "Digite 3 atualizar Produtos"
+  putStrLn "Digite 4 o valor total"
   putStrLn "Digite 0 para sair"
   putStr "Opção: "
   opt <- getChar
@@ -84,12 +86,15 @@ menu dados = do
       tit <- getLine
       let a= read tit ::String
       
-      let res=remover dados (Produto a 0 0.0)
+      let res=remover dados (Produto a 0 0)
       putStrLn "\nItem removido com sucesso"
       menu res
     '3' -> do
       atualizar dados
       -- putStrLn "\nItem removido com sucesso"
+      menu dados
+    '4' -> do
+      total dados
       menu dados
     '0' -> do
       putStrLn "\n--------FIM--------"
