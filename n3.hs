@@ -1,5 +1,4 @@
 
-produtos = [("coxinha",3,345.10),("bomba",2,250.5),("pastel",4,423.10)]
 data Arvore a = Nulo | No (Arvore a) a (Arvore a)
                deriving (Show)
 criar_arvore :: (Ord a) => [a] -> Arvore a
@@ -25,11 +24,13 @@ buscararvore listba m  = criar_arvore (buscar listba m)
 --atualizar :: (Ord a) => [a] -> [a] -> Arvore a
 --atualizar n m = criar_arvore (n ++ m)
 
-total :: [(String,Integer,Double)] -> String
-total [] = "R$:0.0"
-total listt = "R$:" ++ show (sum [x | (_,_,x) <- listt])
+--total :: [(String,Integer,Double)] -> String
+--total [] = "R$:0.0"
+--total listt = "R$:" ++ show (sum [x | (_,_,x) <- listt])
+multiplicacao :: Float -> Float -> Float
+multiplicacao x y = x*y
 
-data Registro = Produto String Integer Double | Vazio
+data Registro = Produto String Float Float | Vazio
               deriving (Eq, Ord, Show)
 
 adicionarProduto :: [Registro] -> IO [Registro]
@@ -53,11 +54,15 @@ atualizar ::[Registro] -> IO ()
 atualizar [] = do putStrLn "\nAGENDA VAZIA"
 atualizar lista = do
   putStrLn "\n--------AGENDA--------"
-  mapM_ print lista
+  print (show (criar_arvore lista))
 
 remover :: [Registro] -> Registro -> [Registro]
 remover [] _ = []
 remover lista reg = [e|e<-lista, mesmoNome e reg/=True]
+
+total :: [Registro] -> String
+total [] = "R$:0.0"
+total lista = show (sum [multiplicacao x y | Produto _ x y <- lista])
 
 menu :: [Registro] -> IO ()
 menu dados = do
@@ -77,10 +82,9 @@ menu dados = do
     '2' -> do
       putStrLn "Digite o nome"
       tit <- getLine
-      let a= read tit::String
-      let b= read tit::Integer
-      let c= read tit::Double
-      let res=remover dados (Produto a b c)
+      let a= read tit ::String
+      
+      let res=remover dados (Produto a 0 0.0)
       putStrLn "\nItem removido com sucesso"
       menu res
     '3' -> do
