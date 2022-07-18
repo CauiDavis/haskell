@@ -61,8 +61,11 @@ remover [] _ = []
 remover lista reg = [e|e<-lista, mesmoNome e reg /= True]
 
 total :: [Registro] -> IO ()
-total [] = do putStrLn "R$:0.0"
+total [] = do 
+  putStrLn "\n--------TOTAL--------"
+  putStrLn "R$:0.0"
 total list = do
+  putStrLn "\n--------TOTAL--------"
   print ("R$:" ++ show (sum [multiplicacao x y | Produto _ x y <- list]))
 
 menu :: [Registro] -> IO ()
@@ -83,10 +86,8 @@ menu dados = do
       menu db
     '2' -> do
       putStrLn "Digite o nome"
-      tit <- getLine
-      let a= read tit ::String
-      
-      let res=remover dados (Produto a 0 0)
+      nome <- getLine
+      let res=remover dados (Produto nome 0.0 0.0)
       putStrLn "\nItem removido com sucesso"
       menu res
     '3' -> do
