@@ -51,15 +51,23 @@ mesmoNome (Produto p1 _ _) (Produto p2 _ _)
   | otherwise = False
 mesmoNome _ _ = False
 
+subtraiProduto :: Registro -> Registro -> Registro
+subtraiProduto (Produto p1 n1 o1) (Produto _ n2 _) = Produto p1 (n1 - n2) o1
+
+venderProduto :: [Registro] -> Registro -> [Registro]
+venderProduto [] _ = []
+venderProduto (x:xs) n |  mesmoNome x n == True = [(subtraiProduto x n)] ++ venderProduto xs n
+                       |  otherwise = [(x)] ++ venderProduto xs n
+
 atualizar ::[Registro] -> IO ()
 atualizar [] = do putStrLn "\n REGISTRO VAZIO"
 atualizar lista = do
   putStrLn "\n--------REGISTRO--------"
   print (show (criar_arvore lista))
 
-remover :: [Registro] -> Registro -> [Registro]
-remover [] _ = []
-remover lista reg = [e|e<-lista, mesmoNome e reg /= True]
+--remover :: [Registro] -> Registro -> [Registro]
+--remover [] _ = []
+--remover lista reg = [e|e<-lista, mesmoNome e reg /= True]
 
 total :: [Registro] -> IO ()
 total [] = do 
@@ -80,7 +88,7 @@ menu :: [Registro] -> IO ()
 menu dados = do
   putStrLn "\n--------MENU--------"
   putStrLn "Digite 1 para inserir Produto"
-  putStrLn "Digite 2 remover Produto"
+  putStrLn "Digite 2 vender Produto"
   putStrLn "Digite 3 atualizar Produtos"
   putStrLn "Digite 4 o valor total"
   putStrLn "Digite 5 buscar Produto"
@@ -94,11 +102,13 @@ menu dados = do
       putStrLn "Produto Adicionado"
       menu db
     '2' -> do
-      putStrLn "\n--------REMOVER--------"
+      putStrLn "\n--------VENDER PRODUTO--------"
       putStrLn "Digite o nome do produto"
       nome <- getLine
-      let res=remover dados (Produto nome 0.0 0.0)
-      putStrLn "\nItem removido com sucesso"
+      putStrLn "Digite a quantidade"
+      qtd <- getLine
+      let res = venderProduto dados (Produto nome (read qtd) 0.0)
+      putStrLn "\nProduto vendido com sucesso"
       menu res
     '3' -> do
       atualizar dados
