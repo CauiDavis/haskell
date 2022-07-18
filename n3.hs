@@ -69,6 +69,13 @@ total list = do
   putStrLn "\n--------TOTAL--------"
   print ("R$:" ++ show (sum [multiplicacao x y | Produto _ x y <- list]))
 
+buscar :: [Registro] -> Registro -> IO ()
+buscar [] _ = do 
+  putStrLn "\n REGISTRO VAZIO PARA BUSCA"
+buscar list x = do
+  putStrLn "\n--------PRODUTO ENCONTRADO--------"
+  print (show ([e|e<-list, mesmoNome e x == True]))
+
 menu :: [Registro] -> IO ()
 menu dados = do
   putStrLn "\n--------MENU--------"
@@ -76,6 +83,7 @@ menu dados = do
   putStrLn "Digite 2 remover Produto"
   putStrLn "Digite 3 atualizar Produtos"
   putStrLn "Digite 4 o valor total"
+  putStrLn "Digite 5 buscar Produto"
   putStrLn "Digite 0 para sair"
   putStr "Opção: "
   opt <- getChar
@@ -86,7 +94,8 @@ menu dados = do
       putStrLn "Produto Adicionado"
       menu db
     '2' -> do
-      putStrLn "Digite o nome"
+      putStrLn "\n--------REMOVER--------"
+      putStrLn "Digite o nome do produto"
       nome <- getLine
       let res=remover dados (Produto nome 0.0 0.0)
       putStrLn "\nItem removido com sucesso"
@@ -96,6 +105,12 @@ menu dados = do
       menu dados
     '4' -> do
       total dados
+      menu dados
+    '5' -> do
+      putStrLn "\n--------BUSCAR--------"
+      putStrLn "digite o nome do produto"
+      nome <- getLine
+      buscar dados (Produto nome 0.0 0.0)
       menu dados
     '0' -> do
       putStrLn "\n--------FIM--------"
