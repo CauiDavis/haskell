@@ -14,12 +14,12 @@ inserir (No arv1 v arv2) x | (v == x) = No arv1 v arv2
                            | (v < x) = No arv1 v (inserir arv2 x)
                            | (v > x) = No (inserir arv1 x) v arv2
 
-buscar :: (Ord a) => [a] -> a -> [a]
-buscar [] n = []
-buscar listb n = [x | x <- listb, x == n]
+--buscar :: (Ord a) => [a] -> a -> [a]
+--buscar [] n = []
+--buscar listb n = [x | x <- listb, x == n]
 
-buscararvore ::(Ord a) => [a] -> a -> Arvore a
-buscararvore listba m  = criar_arvore (buscar listba m)
+--buscararvore ::(Ord a) => [a] -> a -> Arvore a
+--buscararvore listba m  = criar_arvore (buscar listba m)
 
 --atualizar :: (Ord a) => [a] -> [a] -> Arvore a
 --atualizar n m = criar_arvore (n ++ m)
@@ -27,6 +27,7 @@ buscararvore listba m  = criar_arvore (buscar listba m)
 --total :: [(String,Integer,Double)] -> String
 --total [] = "R$:0.0"
 --total listt = "R$:" ++ show (sum [x | (_,_,x) <- listt])
+
 multiplicacao :: Float -> Float -> Float
 multiplicacao x y = x*y
 
@@ -92,7 +93,6 @@ menu dados = do
       menu res
     '3' -> do
       atualizar dados
-      -- putStrLn "\nItem removido com sucesso"
       menu dados
     '4' -> do
       total dados
