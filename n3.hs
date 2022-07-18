@@ -54,10 +54,18 @@ mesmoNome _ _ = False
 subtraiProduto :: Registro -> Registro -> Registro
 subtraiProduto (Produto p1 n1 o1) (Produto _ n2 _) = Produto p1 (n1 - n2) o1
 
+estoque :: Registro -> Bool
+estoque (Produto _ x _) | x < 1 = True
+                      | otherwise = False
+
 venderProduto :: [Registro] -> Registro -> [Registro]
 venderProduto [] _ = []
 venderProduto (x:xs) n |  mesmoNome x n == True = [(subtraiProduto x n)] ++ venderProduto xs n
                        |  otherwise = [(x)] ++ venderProduto xs n
+
+vender :: [Registro] -> [Registro]
+vender [] = []
+vender listv = [x | x <- listv, estoque x == False]
 
 atualizar ::[Registro] -> IO ()
 atualizar [] = do putStrLn "\n REGISTRO VAZIO"
@@ -107,9 +115,10 @@ menu dados = do
       nome <- getLine
       putStrLn "Digite a quantidade"
       qtd <- getLine
-      let res = venderProduto dados (Produto nome (read qtd) 0.0)
+      let res1 = venderProduto dados (Produto nome (read qtd) 0.0)
+      let res2 = vender res1
       putStrLn "\nProduto vendido com sucesso"
-      menu res
+      menu res2
     '3' -> do
       atualizar dados
       menu dados
