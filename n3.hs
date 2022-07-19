@@ -14,20 +14,6 @@ inserir (No arv1 v arv2) x | (v == x) = No arv1 v arv2
                            | (v < x) = No arv1 v (inserir arv2 x)
                            | (v > x) = No (inserir arv1 x) v arv2
 
---buscar :: (Ord a) => [a] -> a -> [a]
---buscar [] n = []
---buscar listb n = [x | x <- listb, x == n]
-
---buscararvore ::(Ord a) => [a] -> a -> Arvore a
---buscararvore listba m  = criar_arvore (buscar listba m)
-
---atualizar :: (Ord a) => [a] -> [a] -> Arvore a
---atualizar n m = criar_arvore (n ++ m)
-
---total :: [(String,Integer,Double)] -> String
---total [] = "R$:0.0"
---total listt = "R$:" ++ show (sum [x | (_,_,x) <- listt])
-
 multiplicacao :: Float -> Float -> Float
 multiplicacao x y = x*y
 
@@ -63,19 +49,21 @@ venderProduto [] _ = []
 venderProduto (x:xs) n |  mesmoNome x n == True = [(subtraiProduto x n)] ++ venderProduto xs n
                        |  otherwise = [(x)] ++ venderProduto xs n
 
-vender :: [Registro] -> [Registro]
-vender [] = []
-vender listv = [x | x <- listv, estoque x == False]
+vender1 :: [Registro] -> [Registro]
+vender1 [] = []
+vender1 listv = [x | x <- listv, estoque x == False]
+
+vender2 :: [Registro] -> IO ()
+vender2 [] = 
+  do putStrLn "\n REGISTRO VAZIO PARA VENDA"
+vender2 listv2 = 
+  putStrLn "\nProduto vendido com sucesso"
 
 atualizar ::[Registro] -> IO ()
 atualizar [] = do putStrLn "\n REGISTRO VAZIO"
 atualizar lista = do
   putStrLn "\n--------REGISTRO--------"
-  print (show (criar_arvore lista))
-
---remover :: [Registro] -> Registro -> [Registro]
---remover [] _ = []
---remover lista reg = [e|e<-lista, mesmoNome e reg /= True]
+  print (criar_arvore lista)
 
 total :: [Registro] -> IO ()
 total [] = do 
@@ -90,7 +78,7 @@ buscar [] _ = do
   putStrLn "\n REGISTRO VAZIO PARA BUSCA"
 buscar list x = do
   putStrLn "\n--------PRODUTO ENCONTRADO--------"
-  print (show ([e|e<-list, mesmoNome e x == True]))
+  print ([e|e<-list, mesmoNome e x == True])
 
 menu :: [Registro] -> IO ()
 menu dados = do
@@ -103,7 +91,7 @@ menu dados = do
   putStrLn "Digite 0 para sair"
   putStr "Opção: "
   opt <- getChar
-  getChar -- descarta o Enter
+  getChar 
   case opt of
     '1' -> do
       db <- adicionarProduto dados
@@ -116,8 +104,8 @@ menu dados = do
       putStrLn "Digite a quantidade"
       qtd <- getLine
       let res1 = venderProduto dados (Produto nome (read qtd) 0.0)
-      let res2 = vender res1
-      putStrLn "\nProduto vendido com sucesso"
+      vender2 res1
+      let res2 = vender1 res1
       menu res2
     '3' -> do
       atualizar dados
