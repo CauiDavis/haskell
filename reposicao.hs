@@ -34,5 +34,4 @@ getByIndex listb strb = [x | y <- listb, x <- [(enlista strb y)]]
 
 --terceira questao
 pascal :: Int -> [(Int, Int)]
-pascal 0 = [(0,0)]
-pascal x = [(x,m) | m <-[0..x] ]
+pascal x = [(x,m) | m <-[0..x]]
